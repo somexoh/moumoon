@@ -144,11 +144,22 @@ function cbMaker( info ){
 		map.centerAndZoom(poi.point, 6);
 
 		console.log("info", info, searchResult.keyword);
-        var infoWindow = new BMap.InfoWindow( "<p class='infoContent' >" + info + '</p>');
+        	var infoWindow = new BMap.InfoWindow( "<p class='infoContent' >" + info + '</p>');
 
-		//marker.addEventListener("mouseover", function(){ this.openInfoWindow(infoWindow); popWindow( searchResult.keyword);});
-		marker.addEventListener("mouseover", function(){  popWindow( searchResult.keyword);});
-		//marker.addEventListener("mouseout", function(){ this.closeInfoWindow(infoWindow);});
+		var keyword = searchResult.keyword;
+		var content = "";
+		for ( idx in cl ){
+			obj = cl[idx];
+			if ( obj["addr"] == keyword ){
+				console.log( obj["content"] );
+				content = obj["content"];
+			}
+		}
+
+        var infoWindow = new BMap.InfoWindow( "<p class='infoContent' >" + content + '</p>');
+		marker.addEventListener("mouseover", function(){ this.openInfoWindow(infoWindow); popWindow( searchResult.keyword);});
+		//marker.addEventListener("mouseover", function(){  popWindow( searchResult.keyword);});
+		marker.addEventListener("mouseout", function(){ this.closeInfoWindow(infoWindow);});
 	}
 }
 
@@ -164,7 +175,18 @@ function appendList( contentList ){
 		map.centerAndZoom(poi.point, 6);
 
 		console.log("info", info, searchResult);
-        var infoWindow = new BMap.InfoWindow( "<p class='infoContent' >" + info + '</p>');
+
+		var keyword = searchResult.keyword;
+		var content = "";
+		for ( idx in cl ){
+			obj = cl[idx];
+			if ( obj["addr"] == keyword ){
+				console.log( obj["content"] );
+				content = obj["content"];
+			}
+		}
+
+        var infoWindow = new BMap.InfoWindow( "<p class='infoContent' >" + content + '</p>');
 
 		marker.addEventListener("mouseover", function(){ this.openInfoWindow(infoWindow);});
 		marker.addEventListener("mouseout", function(){ this.closeInfoWindow(infoWindow);});
