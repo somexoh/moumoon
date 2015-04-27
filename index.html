@@ -10,10 +10,17 @@
 
 <body ng-app="LocFront">
     <div ng-controller="Mapper">
-        {{name}} {{test}}
+        {{name}}
+        <div ng-repeat="item in test">
+            <h2>{{item.title}}</h2>
+            <i><a target="_blank" href="{{item.url}}"> {{item.url}}</a></i>
+            <iframe style="height: 240px;width:320px;"
+                ng-src="{{item.url | trustAsResourceUrl}}"></iframe>
+            <p> {{item.description}}</p>
+        </div>
+        
         <button ng-click="clickFunc()">click</button>
     </div>
-
 </body>
 
 </html>

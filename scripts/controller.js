@@ -11,6 +11,7 @@ localSearch.enableAutoViewport(); //允许自动调节窗体大小
 // controll all the news
 // and bind to a grouped list
 
+
 function webContentWrapper( tag, attr , content ){
 	return '<' + tag + " " + attr + ' >' + content + '</' + tag + '>';
 }
@@ -172,8 +173,50 @@ function filterTime()
 	appendList( ndata );
 
 }
+console.log('hello2');
 
+function getData (  url )
+{
+    console.log('gts');
+    var p = $.get(
+        url,
+        function(data){
+            console.log(data);
+            DATA = data;
+            console.log(data+'pp');
+            n = NewsManager();
+            n.initRaw(DATA);
+            n.grouped()
+            appendList( DATA );
+            console.log('callback2');
+        });
 
+    console.log('gte');
+}
+
+(function(){
+    console.log('hello')
+    var p = $.get(
+        '/content2.json',
+        function(data){
+            console.log(data);
+            /*
+            console.log('callback1');
+            DATA = data;
+            console.log(data+'pp');
+            n = NewsManager();
+            n.initRaw(DATA);
+            n.grouped()
+            appendList( DATA );
+            console.log('callback2');
+            */
+        });
+    console.log(p);
+    console.log(p.responseText);
+    console.log('callback');
+})()
+
+console.log('hello3');
 /*
 function searchByName() {
     map.clearOverlays();//清空原来的标注

@@ -2,19 +2,23 @@ var app = angular.module("LocFront", []);
 
 app.controller('Mapper', ["$scope", "acquireList", function ($scope, acquireList) {
     $scope.name = "mapper";
-    $scope.test = acquireList.test;
+    $scope.test = [];
     $scope.clickFunc = function () {
-        $scope.test = acquireList.getTestList();
+        acquireList.getTestList(function(data){
+            $scope.test = data;
+            $scope.test.pop();
+        });
     };
 }])
 
 .factory("acquireList", ["$http", function ($http) {
     var time = "time";
-    var getTestList = function () {
+    var getTestList = function ( sFunc ) {
         $http
-            .get("http://121.41.47.132/backend.php")
+            .get("/backend.php")
             .success(function (data) {
                 console.log(data);
+                sFunc(data);
             })
             .error()
     };
@@ -22,4 +26,10 @@ app.controller('Mapper', ["$scope", "acquireList", function ($scope, acquireList
         "test": time,
         "getTestList": getTestList
     };
-}]);
+}])
+
+.filter( 'trustAsResourceUrl', ['$sce', function($sce){
+    return function(val){
+        return $sce.trustAsResourceUrl(val);
+    }
+}] )

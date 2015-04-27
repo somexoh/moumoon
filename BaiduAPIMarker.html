@@ -3,7 +3,8 @@
     <title>Add markers in Baidu API</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
-    <style>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<style>
 
 .searchInfo{
   text-align: center;
@@ -35,6 +36,8 @@
           start:<input id="startTime" type="text" />
           end:<input id="endTime" type="text" />
           <button onclick="filterTime()" >time</button>
+          <button onclick="getData('/content1.json')">content1</button>
+          <button onclick="getData('/content2.json')">content2</button>
         </div>
         <div class="datasourceSeletor">
           <form >
