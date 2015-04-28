@@ -34,7 +34,13 @@ var NewsManager = function () {
         this.rawData = data;
         this.groupData = new Map();
     }
+    this.appendRaw = function (data) {
+        var tmp = this.rawData.concat(data);
+        this.rawData = tmp;
+        this.grouplist(data);
+    }
     this.add2group = function (obj) {
+        console.log("at add2group");
         d = new Date(Date.parse(obj['time']))
         console.log(d.toISOString());
         content = contentWrapper(d.toLocaleString() + '<br>' + obj['content']);
@@ -46,8 +52,12 @@ var NewsManager = function () {
         }
     }
     this.grouped = function () {
-        for (var i in this.rawData) {
-            obj = this.rawData[i];
+        console.log("at grouped");
+        this.grouplist(this.rawData);
+    }
+    this.grouplist = function (data) {
+        for (var i in data) {
+            var obj = data[i];
             this.add2group(obj);
         }
     }
@@ -60,55 +70,6 @@ var NewsManager = function () {
 nm = NewsManager();
 nm.initRaw(DATA);
 nm.grouped()
-
-/*
-
-function infoWindowGenerator( infocontent )
-{
-  var str = "<div class='infoContent' >" + infocontent + '</div>';
-  return new BMap.InfoWindow( str );
-}
-
-function popWindow( keyword ){
-  console.log( keyword );
-  for ( idx in DATA ){
-    obj = DATA[idx];
-    if ( obj["addr"] == keyword ){
-      console.log( obj["content"] );
-      document.getElementById( "infoWindow" ).innerHTML = obj["content"];
-      break;
-    }
-  }
-}
-
-function cbMaker( info ){
-  return function( searchResult ){
-    var poi = searchResult.getPoi(0);
-    var marker = new BMap.Marker(new BMap.Point(poi.point.lng, poi.point.lat));  // 创建标注，为要查询的地方对应的经纬度
-        map.addOverlay(marker);
-
-    map.centerAndZoom(poi.point, 6);
-
-    console.log("info", info, searchResult.keyword);
-          var infoWindow = new BMap.InfoWindow( "<p class='infoContent' >" + info + '</p>');
-
-    var keyword = searchResult.keyword;
-    var content = "";
-    for ( idx in DATA ){
-      obj = DATA[idx];
-      if ( obj["addr"] == keyword ){
-        console.log( obj["content"] );
-        content = obj["content"];
-      }
-    }
-
-        var infoWindow = new BMap.InfoWindow( "<p class='infoContent' >" + content + '</p>');
-    marker.addEventListener("mouseover", function(){ this.openInfoWindow(infoWindow); popWindow( searchResult.keyword);});
-    //marker.addEventListener("mouseover", function(){  popWindow( searchResult.keyword);});
-    marker.addEventListener("mouseout", function(){ this.closeInfoWindow(infoWindow);});
-  }
-}
-*/
 
 function appendList(contentList) {
     map.clearOverlays(); //清空原来的标注
@@ -152,33 +113,6 @@ function appendList(contentList) {
 
 appendList(DATA);
 
-
-function filterTime() {
-    startTimeRaw = document.getElementById('startTime').value;
-    endTimeRaw = document.getElementById('endTime').value;
-
-    startTime = new Date(Date.parse(startTimeRaw));
-    endTime = new Date(Date.parse(endTimeRaw));
-
-
-    console.log(startTime, endTime);
-
-    ndata = []
-    for (idx in DATA) {
-        obj = DATA[idx];
-        dt = new Date(Date.parse(obj['time']));
-        if (startTime <= dt && dt <= endTime) {
-            ndata.push(obj);
-        }
-    }
-
-    var n = NewsManager();
-    n.initRaw(ndata);
-    n.grouped()
-
-    appendList(ndata);
-
-}
 console.log('hello2');
 
 function getData(url) {
@@ -199,44 +133,5 @@ function getData(url) {
     console.log('gte');
 }
 
-(function () {
-    console.log('hello')
-    var p = $.get(
-        '/content2.json',
-        function (data) {
-            console.log(data);
-            /*
-            console.log('callback1');
-            DATA = data;
-            console.log(data+'pp');
-            n = NewsManager();
-            n.initRaw(DATA);
-            n.grouped()
-            appendList( DATA );
-            console.log('callback2');
-            */
-        });
-    console.log(p);
-    console.log(p.responseText);
-    console.log('callback');
-})()
 
 console.log('hello3');
-/*
-function searchByName() {
-    map.clearOverlays();//清空原来的标注
-    var keyword = document.getElementById("text_").value;
-    localSearch.setSearchCompleteCallback(function (searchResult) {
-        var poi = searchResult.getPoi(0);
-        document.getElementById("result_").value = poi.point.lng + "," + poi.point.lat;
-        map.centerAndZoom(poi.point, 13);
-        var marker = new BMap.Marker(new BMap.Point(poi.point.lng, poi.point.lat));  // 创建标注，为要查询的地方对应的经纬度
-        map.addOverlay(marker);
-        var content = document.getElementById("text_").value + "<br/><br/>longitude：" + poi.point.lng + "<br/>latitude：" + poi.point.lat;
-        var infoWindow = new BMap.InfoWindow("<p style='font-size:14px;'>" + content + "</p>");
-       // marker.addEventListener("click", function () { this.openInfoWindow(infoWindow); });
-        marker.addEventListener("mouseover", function(){ this.openInfoWindow(infoWindow);}); 
-        marker.addEventListener("mouseout", function(){this.closeInfoWindow(infoWindow);}); 
-    });
-        localSearch.search(keyword);
-}*/
