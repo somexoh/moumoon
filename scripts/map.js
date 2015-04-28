@@ -9,8 +9,13 @@ $(document).ready(function () {
             $('.queryWrapper').hide();
             $("#titleBar").css("opacity", "0.6");
             //$(this).css("top", "-20%");
+
+            $.getJSON('http://121.41.47.132/moumoon/backend.php', function (data) {
+                console.log(data);
+            })
         })
 })
+
 
 $(function () {
     $('#datetimepicker1').datetimepicker({
