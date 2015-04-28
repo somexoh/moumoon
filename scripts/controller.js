@@ -117,17 +117,20 @@ console.log('hello2');
 
 function getData(url) {
     console.log('gts');
-    var p = $.get(
+    var p = $.getJSON(
         url,
         function (data) {
-            console.log(data);
-            DATA = data;
-            console.log(data + 'pp');
-            n = NewsManager();
-            n.initRaw(DATA);
-            n.grouped()
-            appendList(DATA);
-            console.log('callback2');
+            //console.log(data);
+            var tmp = [];
+            for (var i in data) {
+                var o = data[i];
+                //console.log(o);
+                if (o != undefined && o.hasOwnProperty('pubdate') != false) {
+                    tmp.push(o);
+                }
+            }
+            console.log(tmp);
+
         });
 
     console.log('gte');

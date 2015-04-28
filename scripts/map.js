@@ -9,6 +9,7 @@ $(document).ready(function () {
             $('.queryWrapper').hide();
             $("#titleBar").css("opacity", "0.6");
             //$(this).css("top", "-20%");
+            getData("http://121.41.47.132/moumoon/backend.php");
         })
 })
 
