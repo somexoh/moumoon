@@ -11,7 +11,7 @@ if (!$db){
 }else { //echo "Opened database success";
 }
 
-$query='SELECT * from baidurss limit 10' ;
+$query='SELECT * from locations limit 100' ;
 $result=pg_query($query) or die( 'Query failed:'.pg_last_error() );
 $ans_stack=array();
 echo "[";
