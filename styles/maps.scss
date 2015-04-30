@@ -97,6 +97,9 @@ body {
 
 .infoWindow {
     background-color: red;
+    max-height: 15em;
+    overflow-y: scroll;
+    overflow-x: hidden;
     .infoWindowItem {
         background-color: pink;
         border-radius: 2px;

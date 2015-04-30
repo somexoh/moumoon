@@ -9,6 +9,9 @@ $(document).ready(function () {
             $('.queryWrapper').hide();
             $("#titleBar").css("opacity", "0.6");
             //$(this).css("top", "-20%");
+            var start = $('#datetimepicker1').data('datetimepicker').getDate();
+            var end = $('#datetimepicker2').data('datetimepicker').getDate();
+            console.log(start, end);
             getData("http://121.41.47.132/moumoon/backend.php");
         })
 })
