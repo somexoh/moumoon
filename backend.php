@@ -1,5 +1,29 @@
 <?php
 header( "Access-Control-Allow-Origin: *");
+
+
+/*
+ * Get Params
+ */
+
+$startTime = "";
+$endTime = "";
+
+
+$startTimeSQL = " ";
+$endTimeSQL = " ";
+
+$startTime = $_GET["startTime"];
+$endTime = $_GET["endTime"];
+
+
+if ( !empty($startTime)) {
+    $startTimeSQL = " pubdate > date (\"$startTime\") ";
+}
+if ( !empty($endTime)) {
+    $endTimeSQL = "date (\"$endTime\") ";
+}
+
 /* End of file filename.php */
 $host="host=127.0.0.1" ;
 $port="port=5432" ;
